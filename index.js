@@ -17,7 +17,7 @@ app.use('/css', express.static(path.join(__dirname, 'css')))
 app.use('/img', express.static(path.join(__dirname, 'img')))
 app.use(cookieSession({
   name: 'loginCookie',                         
-  keys: ['key1', 'key2']   
+  keys: ['uniquekey1', 'uniquekey2']   
 }))
 // -------------- variable definition -------------- //
 var visitorCount = 0; 
@@ -48,13 +48,22 @@ var authorizationUri = oauth2.authorizationCode.authorizeURL({
     redirect_uri: ion_redirect_uri
 });
 app.get('/', function(req, res){
-    console.log('no sub-page');
-    res.sendFile(__dirname + '/htmls/home.html');
+    if(typeof(req.session.username) == 'undefined')
+    {
+        res.sendFile(__dirname + '/htmls/home.html');
+    }
+    else{
+        res.render('homepage', {name: req.session.username})
+    }
 });
 app.get('/login', function(req, res){
     console.log('no sub-page');
     res.sendFile(__dirname + '/htmls/login.html');
 });
+app.get('/logout', function(req,res){
+    req.session = null
+    res.redirect('https://meowmates.sites.tjhsst.edu');
+})
 app.get('/match', function(req, res){
     if(typeof(req.session.username) == 'undefined')
     {
