@@ -48,7 +48,7 @@ function registerVal(){
   	    required: true,
   			email: true
   		},
-  		reg_agree: "required",
+  		reg_fullname: "required",
     },
 	  errorClass: "form-invalid",
 	  errorPlacement: function( label, element ) {
@@ -60,14 +60,23 @@ function registerVal(){
   	  }
     }
   });
+  r = document.getElementById("showerrorreg");
     console.log("works");
     $.ajax({
             url: "registerVal",                  
               type: "get",             
               data:  $('#register-form').serialize(), 
             success: function(response) {
-                console.log("hellow");
-                location.href = "http://meowmates.sites.tjhsst.edu/login";
+              var res = response; 
+                console.log(res);
+                if(res == "")
+                {
+                    location.href = "http://meowmates.sites.tjhsst.edu/login";
+                }
+                else
+                {
+                    r.innerHTML = res; 
+                }
                     },
             error: function (stat, err) {
                 console.log("something went wrong");

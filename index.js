@@ -70,32 +70,50 @@ app.get('/register', function(req, res){
 app.get('/validateLogin', function(req, res){
     var username = req.query.lg_username; 
     var password = req.query.lg_password; 
-    pool.query('CALL check_pass(?,?);', [username,password], function (error, results, fields) {
-      if (error) throw error;
-      console.log(results[0]);
-      if(typeof(results[0]) == 'undefined')
+    if(password === ''|| username === '')
       {
-         res.send("incorrect login");
+        res.send("Try again! ");
       }
-        else {
-        req.session.username = username; 
-        console.log(req.session.username); 
-        res.send("");
-      }
-    });
-
+    else {
+        pool.query('CALL check_pass(?,?);', [username,password], function (error, results, fields) {
+          if (error) throw error;
+          console.log(results[0]);
+    
+          if(typeof(results[0]) == 'undefined')
+          {
+             res.send("incorrect login");
+          }
+            else {
+            req.session.username = username; 
+            console.log(req.session.username); 
+            res.send("");
+          }
+        });
+    }
 });
 app.get('/registerVal', function(req, res){
     var username = req.query.reg_username; 
     var password = req.query.reg_password; 
     var email = req.query.reg_email; 
     var fullusername = req.query.reg_fullname; 
-    pool.query('CALL add_owner(?,?,?,?);', [username,password,email,fullusername], function (error, results, fields) {
-      if (error) throw error;
-        console.log("worked"); 
-        res.send(""); 
-    });
-
+    console.log(email); 
+    if(password === ''|| username === '' || email === '' || fullusername === '')
+      {
+        res.send("Try again! ");
+      }
+    else {
+        pool.query('CALL add_owner(?,?,?,?);', [username,password,email,fullusername], function (error, results, fields) {
+          if (error) throw error;
+            console.log(results[0]);
+          if(typeof(results[0]) == 'undefined')
+          {
+             res.send("change your username");
+          }
+            else {
+            res.send("");
+          }
+        });
+    }
 });
 
 // -------------- listener -------------- //
