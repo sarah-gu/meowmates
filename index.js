@@ -72,6 +72,14 @@ app.get('/match', function(req, res){
     res.send("page coming soon!")
     // res.sendFile(__dirname + '/htmls/match.html');
 });
+app.get('/petprofile', function(req, res){
+    if(typeof(req.session.username) == 'undefined')
+    {
+        res.send("login to view this content!"); 
+    }
+    res.send('profile_page', {name: req.session.username});
+    // res.sendFile(__dirname + '/htmls/match.html');
+});
 app.get('/register', function(req, res){
     console.log('no sub-page');
     res.sendFile(__dirname + '/htmls/register.html');
