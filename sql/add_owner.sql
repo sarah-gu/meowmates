@@ -16,6 +16,23 @@ END$$
 
 # change the delimiter back to normal
 DELIMITER ; 
+DROP PROCEDURE IF EXISTS add_pet; 
+ 
+# change delimiter to $$ --> i.e. the statement terminator is changed to $$
+DELIMITER $$ 
+ 
+# name the procedure; this one will have no arguments
+CREATE PROCEDURE add_pet(IN imagelinks VARCHAR(100), IN idCur VARCHAR(100), IN hobby VARCHAR(100), IN locations VARCHAR(100), IN petType VARCHAR(100), IN bios VARCHAR(100))
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pets WHERE id = idCur) THEN
+        INSERT INTO pets(imagelink, id, animal, hobbies, location, bio) VALUE (imagelinks, idCur, petType , hobby, locations, bios);
+        SELECT id FROM pets WHERE id =idCur;
+    END IF;
+    # statement (therefore, procedure) is over
+END$$ 
+
+# change the delimiter back to normal
+DELIMITER ; 
 
 DROP PROCEDURE IF EXISTS check_pass; 
 # change delimiter to $$ --> i.e. the statement terminator is changed to $$

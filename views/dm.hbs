@@ -16,22 +16,22 @@
   <body>
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" value={{name}} autocomplete="off" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
-    name = {{name}};
+    name = "{{{name}}}";
   $(function () {
-    var socket = io();
+    var socket = io.connect('https://meowmates.sites.tjhsst.edu/', { path: '/socket.io/'  });
     $('form').submit(function(e){
       e.preventDefault(); // prevents page reloading
       socket.emit('chat message', $('#m').val());
-      $('#m').val('');
+      $('#m').val(name);
       return false;
     });
     socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(name + msg));
+      $('#messages').append($('<li>').text(msg));
     });
   });
 </script>

@@ -7,7 +7,7 @@ CREATE PROCEDURE rand_pet()
 BEGIN
     SELECT * FROM pets
     ORDER BY RAND()
-    LIMIT 1
+    LIMIT 1;
 END$$
 
 DELIMITER ;

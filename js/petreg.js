@@ -6,14 +6,11 @@ function petReg(){
   	  reg_location: {
   			required: true,
   		},
-   		reg_times: {
-  			required: true,
-  			minlength: 5,
-  		},
   		reg_bio: {
   	    required: true,
   		},
   		reg_ptype: "required",
+  		reg_hobby: "required",
     },
 	  errorClass: "form-invalid",
 	  errorPlacement: function( label, element ) {
@@ -25,18 +22,17 @@ function petReg(){
   	  }
     }
   });
-  r = document.getElementById("showerrorreg");
     console.log("works");
     $.ajax({
             url: "petRegister",                  
               type: "get",             
-              data:  $('#register-form').serialize(), 
+              data:  $('#petregister-form').serialize(), 
             success: function(response) {
               var res = response; 
                 console.log(res);
                 if(res == "")
                 {
-                    location.href = "http://meowmates.sites.tjhsst.edu/login";
+                    location.href = "http://meowmates.sites.tjhsst.edu/match";
                 }
                 else
                 {

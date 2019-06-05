@@ -22,9 +22,12 @@ a:hover {
 }
 /*=== 4. Main Form ===*/
 .login-form-1 {
-  max-width: 300px;
+  width: 200px;
   border-radius: 5px;
   display: inline-block;
+}
+.form-control-bio {
+  height: 200px;
 }
 .main-login-form {
   position: relative;
