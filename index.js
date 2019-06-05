@@ -171,13 +171,13 @@ app.get('/petRegister', function(req, res){
     var location = req.query.reg_location;
     var hobby = req.query.reg_hobby;
     var petType = req.query.reg_ptype;
-
-    if(username === ''|| bio === '' || location === '' || hobby === '' || petType ==='')
+    var imagelink = req.query.imagelink; 
+    if(imagelink === '' || username === ''|| bio === '' || location === '' || hobby === '' || petType ==='')
       {
         res.send("Try again! ");
       }
     else {
-        pool.query('CALL add_pet(?,?,?,?,?);', [username, hobby, location, petType, bio ], function (error, results, fields) {
+        pool.query('CALL add_pet(?, ?,?,?,?,?);', [imagelink, username, hobby, location, petType, bio ], function (error, results, fields) {
           if (error) throw error;
             console.log(results[0]);
           if(typeof(results[0]) == 'undefined')
