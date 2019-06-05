@@ -2,14 +2,12 @@ DROP PROCEDURE IF EXISTS new_pet;
 
 DELIMITER $$
 
-CREATE PROCEDURE new_pet(IN name VARCHAR(100))
+CREATE PROCEDURE new_pet(IN h_name VARCHAR(100), IN name VARCHAR(100), IN pet_type VARCHAR(100), IN hobby VARCHAR(100), IN prefs VARCHAR(100))
 
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pets WHERE p_name = name) THEN
-        INSERT INTO pets(p_name, p_type, p_x, p_y, p_time) VALUES (name, 0, 0, 0, 0);
-        INSERT INTO pet_requests(pet_name, pet_name1, pet_name2, pet_name3, 
-            pet_name4, pet_name5) VALUES (name, '', '', '', '', '');
-    END IF;
+    -- IF NOT EXISTS (SELECT 1 FROM pets WHERE p_name = name) THEN
+    INSERT INTO pets(human_name, p_name, p_type, p_hobby, p_aniPref) VALUES (h_name, name, pet_type, hobby, prefs);
+    -- END IF;
 END$$
 
 DELIMITER ;

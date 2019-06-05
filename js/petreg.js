@@ -1,54 +1,19 @@
-function loginProcess(){
-    r = document.getElementById("showerror");
-
-    $("#login-form").validate({
-  	rules: {
-      lg_username: "required",
-  	  lg_password: "required",
-    },
-  	errorClass: "form-invalid"
-  });
-    console.log("works");
-    $.ajax({
-            url: "validateLogin",                  
-              type: "get",             
-              data:  $('#login-form').serialize(), 
-            success: function(response) {
-                var res = response; 
-                console.log(res);
-                if(res == "")
-                {
-                    location.href = "http://meowmates.sites.tjhsst.edu";
-                }
-                else
-                {
-                    r.innerHTML = res; 
-                }
-            },
-            error: function (stat, err) {
-                console.log("something went wrong");
-                    }       
-                });
-}
-function registerVal(){
+function petReg(){
     	// Validation
-  $("#register-form").validate({
+  $("#petregister-form").validate({
   	rules: {
       reg_username: "required",
-  	  reg_password: {
+  	  reg_location: {
   			required: true,
-  			minlength: 5
   		},
-   		reg_password_confirm: {
+   		reg_times: {
   			required: true,
   			minlength: 5,
-  			equalTo: "#register-form [name=reg_password]"
   		},
-  		reg_email: {
+  		reg_bio: {
   	    required: true,
-  			email: true
   		},
-  		reg_fullname: "required",
+  		reg_ptype: "required",
     },
 	  errorClass: "form-invalid",
 	  errorPlacement: function( label, element ) {
@@ -63,7 +28,7 @@ function registerVal(){
   r = document.getElementById("showerrorreg");
     console.log("works");
     $.ajax({
-            url: "registerVal",                  
+            url: "petRegister",                  
               type: "get",             
               data:  $('#register-form').serialize(), 
             success: function(response) {
@@ -83,5 +48,3 @@ function registerVal(){
                     }       
                 });
 }
-
-

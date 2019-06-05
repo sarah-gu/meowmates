@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var simpleoauth2 = require("simple-oauth2");
 var path = require('path');
 var hbs = require('hbs');
@@ -69,7 +71,7 @@ app.get('/match', function(req, res){
     {
         res.send("login to view this content!"); 
     }
-    res.send("page coming soon!")
+    res.render('match', {name: req.session.username});
     // res.sendFile(__dirname + '/htmls/match.html');
 });
 app.get('/petprofile', function(req, res){
@@ -77,13 +79,34 @@ app.get('/petprofile', function(req, res){
     {
         res.send("login to view this content!"); 
     }
-    res.send('profile_page', {name: req.session.username});
-    // res.sendFile(__dirname + '/htmls/match.html');
+    // pool.query('SELECT animal, hobbies, aniPref FROM pets WHERE name=?', [req.session.username], function(error, results, field) {
+    //     if (error) throw error;
+    //     console.log(results);
+    //     res.send('profile_page', {name: req.session.username, p_animal: results[0].animal, p_hobbies: results[0].hobbies, p_aniPref: results[0].aniPref});
+    // });
+    pool.query('CALL new_pet(?, ?, ?, ?, ?)', [req.session.username, ], function(error, results, field) {
+        if (error) throw error;
+        console.log(results);
+        res.render('profile_page');
+    });
 });
+
 app.get('/register', function(req, res){
     console.log('no sub-page');
     res.sendFile(__dirname + '/htmls/register.html');
 });
+
+app.get('/dm', function(req, res){
+    res.sendFile(__dirname + '/htmls/chat.html');
+});
+
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+    console.log("message: " + msg)
+  });
+});
+
 app.get('/validateLogin', function(req, res){
     var username = req.query.lg_username; 
     var password = req.query.lg_password; 
@@ -136,11 +159,9 @@ app.get('/registerVal', function(req, res){
 // -------------- listener -------------- //
 // The listener is what keeps node 'alive.' 
 
-var listener = app.listen(app.get('port'), function() {
+var listener = http.listen(app.get('port'), function() {
   console.log( 'Express server started on port: '+listener.address().port );
 });
-
-
 
 
 

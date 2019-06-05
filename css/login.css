@@ -1,7 +1,7 @@
 html,
 body {
-  background: #efefef;
-  font-family: 'Varela Round';
+  background: white;
+  /*font-family: 'Varela Round';*/
 }
 /*=== 2. Anchor Link ===*/
 a {
@@ -14,7 +14,7 @@ a:hover {
 }
 /*=== 3. Text Outside the Box ===*/
 .etc-login-form {
-  color: #919191;
+  color: black;
   padding: 10px 20px;
 }
 .etc-login-form p {
@@ -261,6 +261,6 @@ label:hover:before {
 .logo {
   padding: 15px 0;
   font-size: 25px;
-  color: #aaaaaa;
+  color: black;
   font-weight: bold;
 }

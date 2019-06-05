@@ -1,3 +1,3 @@
-DROP TABLE IF EXISTS pets;
+DROP TABLE IF EXISTS human_pets;
 
-CREATE TABLE pets(p_name VARCHAR(100), p_type VARCHAR(100), p_x INT(100), p_y INT(100), p_time INT(100), PRIMARY KEY(p_name));
+CREATE TABLE human_pets(human_name VARCHAR(100), p_name VARCHAR(100), p_type VARCHAR(100), p_hobby VARCHAR(100), p_aniPref INT(100), PRIMARY KEY(human_name));
