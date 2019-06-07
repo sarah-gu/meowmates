@@ -75,7 +75,7 @@ app.get('/match', function(req, res){
           if (error) throw error;
           console.log(results[0]);
           console.log(results[0][0]['id']);
-          res.render('match', {ownername: req.session.username, name:results[0][0]['id'], petType: results[0][0]['animal'], bio: results[0][0]['bio'], hobbies: results[0][0]['hobbies']});
+          res.render('match', {ownername: req.session.username, imagelink: results[0][0]['imagelink'], name:results[0][0]['id'], petType: results[0][0]['animal'], bio: results[0][0]['bio'], hobbies: results[0][0]['hobbies']});
     });
 
     // res.sendFile(__dirname + '/htmls/match.html');
@@ -171,13 +171,14 @@ app.get('/petRegister', function(req, res){
     var location = req.query.reg_location;
     var hobby = req.query.reg_hobby;
     var petType = req.query.reg_ptype;
-    var imagelink = req.query.imagelink; 
+    var imagelink = req.query.reg_img; 
+    console.log(imagelink);
     if(imagelink === '' || username === ''|| bio === '' || location === '' || hobby === '' || petType ==='')
       {
         res.send("Try again! ");
       }
     else {
-        pool.query('CALL add_pet(?, ?,?,?,?,?);', [imagelink, username, hobby, location, petType, bio ], function (error, results, fields) {
+        pool.query('CALL add_pet(?,?,?,?,?,?);', [imagelink,username, hobby, location, petType, bio], function (error, results, fields) {
           if (error) throw error;
             console.log(results[0]);
           if(typeof(results[0]) == 'undefined')
@@ -192,23 +193,14 @@ app.get('/petRegister', function(req, res){
 });
 app.get('/acceptMatch', function(req, res){
 
-    if(password === ''|| username === '' || email === '' || fullusername === '')
-      {
-        res.send("Try again! ");
-      }
-    else {
-        pool.query('CALL add_owner(?,?,?,?);', [username,password,email,fullusername], function (error, results, fields) {
+
+        pool.query('CALL rand_pet();', function (error, results, fields) {
           if (error) throw error;
             console.log(results[0]);
-          if(typeof(results[0]) == 'undefined')
-          {
-             res.send("change your username");
-          }
-            else {
-            res.send("");
-          }
+            res.send({ownername: req.session.username, imagelink: results[0][0]['imagelink'], name:results[0][0]['id'], petType: results[0][0]['animal'], bio: results[0][0]['bio'], hobbies: results[0][0]['hobbies']});
+
         });
-    }
+
 });
 // -------------- listener -------------- //
 // The listener is what keeps node 'alive.'
