@@ -4,6 +4,7 @@ function accept(){
     type = document.getElementById("animaltype");
     bio = document.getElementById("bio");
     hobby = document.getElementById("hobby");
+    loc = document.getElementById("location"); 
     $.ajax({
             url: "acceptMatch",                  
               type: "get",             
@@ -19,9 +20,10 @@ function accept(){
                 {
                     img.src = res['imagelink']; 
                     namer.innerHTML = "<h1>" + res['name'] + "</h1>";
-                    type.innerHTML = res['petType'];
-                    hobby.innerHTML  = res['hobbies']; 
-                    bio.innerHTML = res['bio']; 
+                    type.innerHTML = "Animal Type:" + res['petType'];
+                    hobby.innerHTML  = "Hobbies:" + res['hobbies']; 
+                    bio.innerHTML = "Bio: " + res['bio']; 
+                    loc.innerHTML = "Location: " + res['location']; 
                 }
             },
             error: function (stat, err) {

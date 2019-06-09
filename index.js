@@ -75,7 +75,7 @@ app.get('/match', function(req, res){
           if (error) throw error;
           console.log(results[0]);
           console.log(results[0][0]['id']);
-          res.render('match', {ownername: req.session.username, imagelink: results[0][0]['imagelink'], name:results[0][0]['id'], petType: results[0][0]['animal'], bio: results[0][0]['bio'], hobbies: results[0][0]['hobbies']});
+          res.render('match', {ownername: req.session.username, imagelink: results[0][0]['imagelink'], name:results[0][0]['id'], petType: results[0][0]['animal'], bio: results[0][0]['bio'], hobbies: results[0][0]['hobbies'], location: results[0][0]['location']});
     });
 
     // res.sendFile(__dirname + '/htmls/match.html');
@@ -197,7 +197,7 @@ app.get('/acceptMatch', function(req, res){
         pool.query('CALL rand_pet();', function (error, results, fields) {
           if (error) throw error;
             console.log(results[0]);
-            res.send({ownername: req.session.username, imagelink: results[0][0]['imagelink'], name:results[0][0]['id'], petType: results[0][0]['animal'], bio: results[0][0]['bio'], hobbies: results[0][0]['hobbies']});
+            res.send({ownername: req.session.username, imagelink: results[0][0]['imagelink'], name:results[0][0]['id'], petType: results[0][0]['animal'], bio: results[0][0]['bio'], hobbies: results[0][0]['hobbies'], location: results[0][0]['location']});
 
         });
 
